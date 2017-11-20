@@ -56,10 +56,7 @@ export default class Message extends React.Component {
       return null;
     }
     const avatarProps = this.getInnerComponentProps();
-    const { currentMessage } = avatarProps;
-    if (currentMessage.user.avatar === null) {
-      return null;
-    }
+    
     return <Avatar {...avatarProps} />;
   }
 
