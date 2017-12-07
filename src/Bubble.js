@@ -199,6 +199,7 @@ const styles = {
 
 Bubble.contextTypes = {
   actionSheet: PropTypes.func,
+  getLocale: PropTypes.func,
 };
 
 Bubble.defaultProps = {
