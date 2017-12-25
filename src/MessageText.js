@@ -78,6 +78,7 @@ export default class MessageText extends React.Component {
     const linkStyle = StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]);
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
+        {this.props.isRibbon && this.props.ribbon && this.props.ribbon}
         <ParsedText
           style={[styles[this.props.position].text, this.props.textStyle[this.props.position], this.props.customTextStyle]}
           parse={[
@@ -144,6 +145,7 @@ MessageText.defaultProps = {
   textStyle: {},
   linkStyle: {},
   parsePatterns: () => [],
+  isRibbon: false,
 };
 
 MessageText.propTypes = {
@@ -164,4 +166,6 @@ MessageText.propTypes = {
   parsePatterns: PropTypes.func,
   textProps: PropTypes.object,
   customTextStyle: Text.propTypes.style,
+  isRibbon: PropTypes.bool,
+  ribbon: PropTypes.node,
 };
