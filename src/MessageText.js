@@ -21,13 +21,13 @@ export default class MessageText extends React.Component {
     this.onPhonePress = this.onPhonePress.bind(this);
     this.onEmailPress = this.onEmailPress.bind(this);
     if (Platform.OS === 'android') {
-        Text.defaultProps.allowFontScaling = true
+        Text.allowFontScaling = true
     };
   }
 
   componentWillUnmount() {
     if (Platform.OS === 'android') {
-        Text.defaultProps.allowFontScaling = false
+        Text.allowFontScaling = false
     };
   }
 
