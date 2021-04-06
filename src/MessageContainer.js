@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import shallowequal from 'shallowequal';
-import InvertibleScrollView from 'react-native-invertible-scroll-view';
+// import InvertibleScrollView from 'react-native-invertible-scroll-view';
 import md5 from 'md5';
 import LoadEarlier from './LoadEarlier';
 import Message from './Message';
@@ -20,7 +20,7 @@ export default class MessageContainer extends React.Component {
     this.renderRow = this.renderRow.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
     this.renderLoadEarlier = this.renderLoadEarlier.bind(this);
-    this.renderScrollComponent = this.renderScrollComponent.bind(this);
+    // this.renderScrollComponent = this.renderScrollComponent.bind(this);
 
     // const dataSource = new ListView.DataSource({
     //   rowHasChanged: (r1, r2) => {
@@ -97,8 +97,8 @@ export default class MessageContainer extends React.Component {
     return null;
   }
 
-  scrollTo(options) {
-    this._invertibleScrollViewRef.scrollTo(options);
+  scrollToOffset(options) {
+    this._invertibleScrollViewRef.scrollToOffset(options);
   }
 
   renderRow(message, sectionId, rowId) {
@@ -127,16 +127,16 @@ export default class MessageContainer extends React.Component {
     return <Message {...messageProps}/>;
   }
 
-  renderScrollComponent(props) {
-    const invertibleScrollViewProps = this.props.invertibleScrollViewProps;
-    return (
-      <InvertibleScrollView
-        {...props}
-        {...invertibleScrollViewProps}
-        ref={component => this._invertibleScrollViewRef = component}
-      />
-    );
-  }
+  // renderScrollComponent(props) {
+  //   const invertibleScrollViewProps = this.props.invertibleScrollViewProps;
+  //   return (
+  //     <InvertibleScrollView
+  //       {...props}
+  //       {...invertibleScrollViewProps}
+  //       ref={component => this._invertibleScrollViewRef = component}
+  //     />
+  //   );
+  // }
 
   render() {
     return (
@@ -149,13 +149,14 @@ export default class MessageContainer extends React.Component {
             renderItem={this.renderRow}
             ListHeaderComponent={this.renderFooter}
             ListFooterComponent={this.renderLoadEarlier}
-            renderScrollComponent={this.renderScrollComponent}
+            // renderScrollComponent ={this.renderScrollComponent}
+            ref={(ref) => { this._invertibleScrollViewRef = ref; }}
             enableEmptySections={true}
             automaticallyAdjustContentInsets={false}
             initialListSize={20}
             pageSize={20}
             keyExtractor={(m)=>{
-              return m._id
+              return m._id;
             }}
             {...this.props.listViewProps}
         />
