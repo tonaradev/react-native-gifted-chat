@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {
-  ListView,
+  FlatList,
   View,
   StyleSheet,
 } from 'react-native';
@@ -22,35 +22,33 @@ export default class MessageContainer extends React.Component {
     this.renderLoadEarlier = this.renderLoadEarlier.bind(this);
     this.renderScrollComponent = this.renderScrollComponent.bind(this);
 
-    const dataSource = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => {
-        return r1.hash !== r2.hash;
-      }
-    });
+    // const dataSource = new ListView.DataSource({
+    //   rowHasChanged: (r1, r2) => {
+    //     return r1.hash !== r2.hash;
+    //   }
+    // });
 
-    const messagesData = this.prepareMessages(props.messages);
+    // const messagesData = this.prepareMessages(props.messages);
     this.state = {
-      dataSource: dataSource.cloneWithRows(messagesData.blob, messagesData.keys)
+      data: this.prepareMessages(props.messages),
+      // dataSource: dataSource.cloneWithRows(messagesData.blob, messagesData.keys)
     };
   }
 
   prepareMessages(messages) {
-    return {
-      keys: messages.map(m => m._id),
-      blob: messages.reduce((o, m, i) => {
-        const previousMessage = messages[i + 1] || {};
-        const nextMessage = messages[i - 1] || {};
-        // add next and previous messages to hash to ensure updates
-        const toHash = JSON.stringify(m) + previousMessage._id + nextMessage._id;
-        o[m._id] = {
-          ...m,
-          previousMessage,
-          nextMessage,
-          hash: md5(toHash)
-        };
-        return o;
-      }, {})
-    };
+    return messages.reduce((o, m, i) => {
+      const previousMessage = messages[i + 1] || {};
+      const nextMessage = messages[i - 1] || {};
+      // add next and previous messages to hash to ensure updates
+      const toHash = JSON.stringify(m) + previousMessage._id + nextMessage._id;
+      o.push({
+        ...m,
+        previousMessage,
+        nextMessage,
+        hash: md5(toHash)
+      });
+      return o;
+    }, []);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -69,7 +67,8 @@ export default class MessageContainer extends React.Component {
     }
     const messagesData = this.prepareMessages(nextProps.messages);
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(messagesData.blob, messagesData.keys)
+      data: messagesData,
+      // dataSource: this.state.dataSource.cloneWithRows(messagesData.blob, messagesData.keys)
     });
   }
 
@@ -145,20 +144,20 @@ export default class MessageContainer extends React.Component {
         ref='container'
         style={styles.container}
       >
-        <ListView
-          enableEmptySections={true}
-          automaticallyAdjustContentInsets={false}
-          initialListSize={20}
-          pageSize={20}
-
-          {...this.props.listViewProps}
-
-          dataSource={this.state.dataSource}
-
-          renderRow={this.renderRow}
-          renderHeader={this.renderFooter}
-          renderFooter={this.renderLoadEarlier}
-          renderScrollComponent={this.renderScrollComponent}
+        <FlatList
+            data={this.state.data}
+            renderItem={this.renderRow}
+            ListHeaderComponent={this.renderFooter}
+            ListFooterComponent={this.renderLoadEarlier}
+            renderScrollComponent={this.renderScrollComponent}
+            enableEmptySections={true}
+            automaticallyAdjustContentInsets={false}
+            initialListSize={20}
+            pageSize={20}
+            keyExtractor={(m)=>{
+              return m._id
+            }}
+            {...this.props.listViewProps}
         />
       </View>
     );
