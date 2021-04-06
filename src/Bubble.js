@@ -18,7 +18,7 @@ import { isSameUser, isSameDay, warnDeprecated } from './utils';
 export default class Bubble extends React.Component {
   constructor(props) {
     super(props);
-    this.onMessageLongPress = this.onMessageLongPress.bind(this);
+    this.onLongPress = this.onLongPress.bind(this);
   }
 
   handleBubbleToNext() {
@@ -93,9 +93,9 @@ export default class Bubble extends React.Component {
     return null;
   }
 
-  onMessageLongPress() {
-    if (this.props.onMessageLongPress) {
-      this.props.onMessageLongPress(this.context, this.props.currentMessage);
+  onLongPress() {
+    if (this.props.onLongPress) {
+      this.props.onLongPress(this.context, this.props.currentMessage);
     } else {
       if (this.props.currentMessage.text) {
         const options = [
@@ -123,7 +123,7 @@ export default class Bubble extends React.Component {
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
         <View style={[styles[this.props.position].wrapper, this.props.wrapperStyle[this.props.position], this.handleBubbleToNext(), this.handleBubbleToPrevious()]}>
           <TouchableWithoutFeedback
-            onLongPress={this.onMessageLongPress}
+            onLongPress={this.onLongPress}
             accessibilityTraits="text"
             {...this.props.touchableProps}
           >
@@ -204,7 +204,7 @@ Bubble.contextTypes = {
 
 Bubble.defaultProps = {
   touchableProps: {},
-  onMessageLongPress: null,
+  onLongPress: null,
   renderMessageImage: null,
   renderMessageText: null,
   renderCustomView: null,
@@ -230,7 +230,7 @@ Bubble.defaultProps = {
 
 Bubble.propTypes = {
   touchableProps: PropTypes.object,
-  onMessageLongPress: PropTypes.func,
+  onLongPress: PropTypes.func,
   renderMessageImage: PropTypes.func,
   renderMessageText: PropTypes.func,
   renderCustomView: PropTypes.func,
