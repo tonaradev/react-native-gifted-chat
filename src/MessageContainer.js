@@ -152,7 +152,7 @@ export default class MessageContainer extends React.Component {
             style={styles.container}
         >
           <FlatList
-              style={{ paddingTop: 10 }}
+              style={{ paddingTop: 10, paddingBottom: 10 }}
               data={this.state.data}
               renderItem={this.renderRow}
               ListHeaderComponent={this.renderLoadEarlier}
