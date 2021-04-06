@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import * as R from 'ramda';
 
 import {
   FlatList,
@@ -30,7 +31,7 @@ export default class MessageContainer extends React.Component {
 
     // const messagesData = this.prepareMessages(props.messages);
     this.state = {
-      data: this.prepareMessages(props.messages),
+      data: this.prepareMessages(R.clone(props.messages)),
       // dataSource: dataSource.cloneWithRows(messagesData.blob, messagesData.keys)
     };
   }
@@ -65,9 +66,9 @@ export default class MessageContainer extends React.Component {
     if (this.props.messages === nextProps.messages) {
       return;
     }
-    const messagesData = this.prepareMessages(nextProps.messages);
+
     this.setState({
-      data: messagesData,
+      data: this.prepareMessages(R.clone(nextProps.messages)),
       // dataSource: this.state.dataSource.cloneWithRows(messagesData.blob, messagesData.keys)
     });
   }
@@ -91,7 +92,7 @@ export default class MessageContainer extends React.Component {
         return this.props.renderLoadEarlier(loadEarlierProps);
       }
       return (
-        <LoadEarlier {...loadEarlierProps}/>
+          <LoadEarlier {...loadEarlierProps}/>
       );
     }
     return null;
@@ -101,7 +102,9 @@ export default class MessageContainer extends React.Component {
     this._invertibleScrollViewRef.scrollToOffset(options);
   }
 
-  renderRow(message, sectionId, rowId) {
+  renderRow(item) {
+    const message = item.item;
+
     if (!message._id && message._id !== 0) {
       console.warn('GiftedChat: `_id` is missing for message', JSON.stringify(message));
     }
@@ -140,27 +143,28 @@ export default class MessageContainer extends React.Component {
 
   render() {
     return (
-      <View
-        ref='container'
-        style={styles.container}
-      >
-        <FlatList
-            data={this.state.data}
-            renderItem={this.renderRow}
-            ListHeaderComponent={this.renderFooter}
-            ListFooterComponent={this.renderLoadEarlier}
-            // renderScrollComponent ={this.renderScrollComponent}
-            ref={(ref) => { this._invertibleScrollViewRef = ref; }}
-            enableEmptySections={true}
-            automaticallyAdjustContentInsets={false}
-            initialListSize={20}
-            pageSize={20}
-            keyExtractor={(m)=>{
-              return m._id;
-            }}
-            {...this.props.listViewProps}
-        />
-      </View>
+        <View
+            ref='container'
+            style={styles.container}
+        >
+          <FlatList
+              style={{ paddingTop: 10 }}
+              data={this.state.data}
+              renderItem={this.renderRow}
+              ListHeaderComponent={this.renderLoadEarlier}
+              ListFooterComponent={this.renderFooter}
+              // renderScrollComponent ={this.renderScrollComponent}
+              ref={(ref) => { this._invertibleScrollViewRef = ref; }}
+              enableEmptySections={true}
+              automaticallyAdjustContentInsets={false}
+              initialListSize={20}
+              pageSize={20}
+              keyExtractor={(m)=>{
+                return m._id;
+              }}
+              {...this.props.listViewProps}
+          />
+        </View>
     );
   }
 }
