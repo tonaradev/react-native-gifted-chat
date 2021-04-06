@@ -103,7 +103,7 @@ export default class MessageContainer extends React.Component {
   }
 
   scrollToEnd(options) {
-    this._invertibleScrollViewRef.scrollToEnd(options.animated);
+    this._invertibleScrollViewRef.scrollToEnd({animated: options.animated, duration: 100 });
   }
 
   renderRow(item) {
