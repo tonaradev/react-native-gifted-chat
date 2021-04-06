@@ -134,6 +134,16 @@ export default class MessageContainer extends React.Component {
     return <Message {...messageProps}/>;
   }
 
+  componentDidMount() {
+    // console.log('MessageContainer componentDidMount')
+    // setTimeout(() => {
+    //   this.scrollToEnd({
+    //     animated: true
+    //   })
+    // }, 250)
+
+  }
+
   // renderScrollComponent(props) {
   //   const invertibleScrollViewProps = this.props.invertibleScrollViewProps;
   //   return (
@@ -155,14 +165,15 @@ export default class MessageContainer extends React.Component {
               style={{ paddingTop: 10, paddingBottom: 10 }}
               data={this.state.data}
               renderItem={this.renderRow}
-              ListHeaderComponent={this.renderLoadEarlier}
-              ListFooterComponent={this.renderFooter}
+              ListHeaderComponent={this.renderFooter}
+              ListFooterComponent={this.renderLoadEarlier}
               // renderScrollComponent ={this.renderScrollComponent}
               ref={(ref) => { this._invertibleScrollViewRef = ref; }}
               enableEmptySections={true}
               automaticallyAdjustContentInsets={false}
               initialListSize={20}
               pageSize={20}
+              inverted={true}
               keyExtractor={(m)=>{
                 return m._id;
               }}
