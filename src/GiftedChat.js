@@ -295,7 +295,7 @@ class GiftedChat extends React.Component {
 
   scrollToBottom(animated = true) {
     if (this._messageContainerRef === null) { return; }
-    this._messageContainerRef.scrollToOffset({
+    this._messageContainerRef.scrollToEnd({
       offset: 0,
       animated,
     });
