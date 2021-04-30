@@ -17,7 +17,10 @@ import Message from './Message';
 export default class MessageContainer extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      showScrollBottom: false,
+      hasScrolled: false,
+    }
     this.renderRow = this.renderRow.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
     this.renderLoadEarlier = this.renderLoadEarlier.bind(this);
@@ -106,6 +109,50 @@ export default class MessageContainer extends React.Component {
     this._invertibleScrollViewRef.scrollToEnd({animated: options.animated, duration: 100 });
   }
 
+  scrollToBottom = (animated = true) => {
+    this.scrollToOffset({ offset: 0, animated })
+  }
+
+  handleOnScroll = (event) => {
+    const {
+      nativeEvent: {
+        contentOffset: { y: contentOffsetY },
+        contentSize: { height: contentSizeHeight },
+        layoutMeasurement: { height: layoutMeasurementHeight },
+      },
+    } = event
+    const { scrollToBottomOffset } = this.props
+    if (contentOffsetY > scrollToBottomOffset!) {
+      this.setState({ showScrollBottom: true, hasScrolled: true })
+    } else {
+      this.setState({ showScrollBottom: false, hasScrolled: true })
+    }
+  }
+
+  renderScrollBottomComponent() {
+    const { scrollToBottomComponent } = this.props
+
+    if (scrollToBottomComponent) {
+      return scrollToBottomComponent()
+    }
+
+    return <Text>V</Text>
+  }
+
+  renderScrollToBottomWrapper() {
+    const propsStyle = this.props.scrollToBottomStyle || {}
+    return (
+      <View style={[styles.scrollToBottomStyle, propsStyle]}>
+        <TouchableOpacity
+          onPress={() => this.scrollToBottom()}
+          hitSlop={{ top: 5, left: 5, right: 5, bottom: 5 }}
+        >
+          {this.renderScrollBottomComponent()}
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
   renderRow(item) {
     const message = item.item;
 
@@ -161,6 +208,9 @@ export default class MessageContainer extends React.Component {
             ref='container'
             style={styles.container}
         >
+          {this.state.showScrollBottom
+          ? this.renderScrollToBottomWrapper()
+          : null}
           <FlatList
               style={{ paddingTop: 10, paddingBottom: 10 }}
               data={this.state.data}
@@ -174,6 +224,7 @@ export default class MessageContainer extends React.Component {
               initialListSize={20}
               pageSize={20}
               inverted={true}
+              onScroll={this.handleOnScroll}
               keyExtractor={(m)=>{
                 return m._id;
               }}
@@ -186,8 +237,26 @@ export default class MessageContainer extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  }
+    fle
+    x: 1
+  },
+  scrollToBottomStyle: {
+    opacity: 0.8,
+    position: 'absolute',
+    right: 10,
+    bottom: 30,
+    zIndex: 999,
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 1,
+  },
 });
 
 MessageContainer.defaultProps = {
@@ -195,6 +264,7 @@ MessageContainer.defaultProps = {
   user: {},
   renderFooter: null,
   renderMessage: null,
+  scrollToBottomOffset: 200,
   onLoadEarlier: () => {
   },
 };
@@ -206,4 +276,5 @@ MessageContainer.propTypes = {
   renderMessage: PropTypes.func,
   onLoadEarlier: PropTypes.func,
   listViewProps: PropTypes.object,
+  scrollToBottomOffset: PropTypes.number,
 };
