@@ -6,6 +6,7 @@ import {
   FlatList,
   View,
   StyleSheet,
+  Text,
 } from 'react-native';
 
 import shallowequal from 'shallowequal';
