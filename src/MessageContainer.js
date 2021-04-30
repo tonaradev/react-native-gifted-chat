@@ -132,16 +132,6 @@ export default class MessageContainer extends React.Component {
     }
   }
 
-  renderScrollBottomComponent() {
-    const { scrollToBottomComponent } = this.props
-
-    if (scrollToBottomComponent) {
-      return scrollToBottomComponent()
-    }
-
-    return <Text>V</Text>
-  }
-
   renderScrollToBottomWrapper() {
     const propsStyle = this.props.scrollToBottomStyle || {}
     return (
@@ -150,7 +140,7 @@ export default class MessageContainer extends React.Component {
           onPress={() => this.scrollToBottom()}
           hitSlop={{ top: 5, left: 5, right: 5, bottom: 5 }}
         >
-          {this.renderScrollBottomComponent()}
+          <Text>V</Text>
         </TouchableOpacity>
       </View>
     )

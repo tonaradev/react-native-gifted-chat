@@ -314,7 +314,7 @@ class GiftedChat extends React.Component {
 
           messages={this.getMessages()}
 
-          ref={component => this.props.messageContainerRef ? this.props.messageContainerRef = component  : this._messageContainerRef = component}
+          ref={component => this._messageContainerRef = component}
         />
         {this.renderChatFooter()}
       </AnimatedView>
@@ -557,7 +557,6 @@ GiftedChat.defaultProps = {
   onInputTextChanged: null,
   maxInputLength: null,
   forceGetKeyboardHeight: false,
-  messageContainerRef: null,
 };
 
 GiftedChat.propTypes = {
@@ -606,12 +605,6 @@ GiftedChat.propTypes = {
   onInputTextChanged: PropTypes.func,
   maxInputLength: PropTypes.number,
   forceGetKeyboardHeight: PropTypes.bool,
-  messageContainerRef: PropTypes.oneOfType([
-    // Either a function
-    PropTypes.func, 
-    // Or the instance of a DOM native element (see the note about SSR)
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  ]),
 };
 
 export {
