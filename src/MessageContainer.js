@@ -124,7 +124,6 @@ export default class MessageContainer extends React.Component {
       },
     } = event
     const { scrollToBottomOffset } = this.props
-    console.log('scrollToBottomOffset', scrollToBottomOffset, event)
     if (contentOffsetY > scrollToBottomOffset) {
       this.setState({ showScrollBottom: true, hasScrolled: true })
     } else {  
@@ -140,7 +139,7 @@ export default class MessageContainer extends React.Component {
           onPress={() => this.scrollToBottom()}
           hitSlop={{ top: 5, left: 5, right: 5, bottom: 5 }}
         >
-          <Text>V</Text>
+          <Text style={{color: 'white', fontWeight: '800'}}>V</Text>
         </TouchableOpacity>
       </View>
     )
@@ -241,10 +240,10 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#0068ff',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
+    shadowColor: 'white',
     shadowOpacity: 0.5,
     shadowOffset: { width: 0, height: 0 },
     shadowRadius: 1,
