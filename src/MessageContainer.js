@@ -123,7 +123,7 @@ export default class MessageContainer extends React.Component {
     } = event
     const { scrollToBottomOffset } = this.props
     console.log('scrollToBottomOffset', scrollToBottomOffset, event)
-    if (contentOffsetY > scrollToBottomOffset!) {
+    if (contentOffsetY > scrollToBottomOffset) {
       this.setState({ showScrollBottom: true, hasScrolled: true })
     } else {  
       this.setState({ showScrollBottom: false, hasScrolled: true })
