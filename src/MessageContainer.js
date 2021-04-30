@@ -7,6 +7,7 @@ import {
   View,
   StyleSheet,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 
 import shallowequal from 'shallowequal';
