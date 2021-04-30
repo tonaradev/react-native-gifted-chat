@@ -238,8 +238,7 @@ export default class MessageContainer extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    fle
-    x: 1
+    flex: 1,
   },
   scrollToBottomStyle: {
     opacity: 0.8,
