@@ -142,7 +142,8 @@ export default class MessageContainer extends React.Component {
         >
           <MaterialIcon
             name='keyboard-arrow-down'
-            size={20}
+            size={25}
+            color="white"
           />
         </TouchableOpacity>
       </View>
