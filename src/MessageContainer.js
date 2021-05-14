@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import shallowequal from 'shallowequal';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 // import InvertibleScrollView from 'react-native-invertible-scroll-view';
 import md5 from 'md5';
 import LoadEarlier from './LoadEarlier';
@@ -139,7 +140,10 @@ export default class MessageContainer extends React.Component {
           onPress={() => this.scrollToBottom()}
           hitSlop={{ top: 5, left: 5, right: 5, bottom: 5 }}
         >
-          <Text style={{color: 'white', fontWeight: '800'}}>V</Text>
+          <MaterialIcon
+            name='keyboard-arrow-down'
+            size={20}
+          />
         </TouchableOpacity>
       </View>
     )
