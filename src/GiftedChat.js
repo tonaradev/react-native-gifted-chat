@@ -316,7 +316,7 @@ class GiftedChat extends React.Component {
           messages={this.getMessages()}
 
           ref={component => this._messageContainerRef = component}
-          scrollViewRef={this.props.messageContainerRef}
+          messageContainerController={this.props.messageContainerController}
         />
         {this.renderChatFooter()}
       </AnimatedView>

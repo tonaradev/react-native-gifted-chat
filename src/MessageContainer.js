@@ -185,7 +185,11 @@ export default class MessageContainer extends React.Component {
     //     animated: true
     //   })
     // }, 250)
-    console.log('scrollViewRef gifted chat', this.props.scrollViewRef)
+    if (this.props.messageContainerController) {
+      this.props.messageContainerController({
+        messageContainerRef: this._invertibleScrollViewRef
+      })
+    }
   }
 
   // renderScrollComponent(props) {
