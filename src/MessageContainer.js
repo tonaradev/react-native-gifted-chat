@@ -215,7 +215,10 @@ export default class MessageContainer extends React.Component {
               ListHeaderComponent={this.renderFooter}
               ListFooterComponent={this.renderLoadEarlier}
               // renderScrollComponent ={this.renderScrollComponent}
-              ref={(ref) => { this._invertibleScrollViewRef = ref; }}
+              ref={(ref) => { 
+                this._invertibleScrollViewRef = ref; 
+                this.props.scrollViewRef = ref;
+              }}
               enableEmptySections={true}
               automaticallyAdjustContentInsets={false}
               initialListSize={20}
