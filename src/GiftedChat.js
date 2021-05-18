@@ -102,7 +102,8 @@ class GiftedChat extends React.Component {
   }
 
   componentWillMount() {
-    const { messages, text } = this.props;
+    const { messages, text, messageContainerRef } = this.props;
+    console.log('messageContainerRef gifted chat', messageContainerRef)
     this.setIsMounted(true);
     this.initLocale();
     this.setMessages(messages || []);
