@@ -121,7 +121,8 @@ class GiftedChat extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.isReplyToActive !== this.props.isReplyToActive) {
-      this.getMessagesContainerHeightWithKeyboard();
+      console.log('calculating height')
+      this.setState({messagesContainerHeight: this.getMessagesContainerHeightWithKeyboard()});
     }
   }
 
@@ -243,6 +244,7 @@ class GiftedChat extends React.Component {
   getMessagesContainerHeightWithKeyboard(composerHeight = this.state.composerHeight) {
     const messagesContainerHeight = this.getBasicMessagesContainerHeight(composerHeight) - this.getKeyboardHeight() + this.getBottomOffset();
      if (this.props.isReplyToActive && this.props.replyPreviewHeight) {
+       console.log('container reply preview height', messagesContainerHeight - this.props.replyPreviewHeight)
        return messagesContainerHeight - this.props.replyPreviewHeight
      } 
      return messagesContainerHeight
