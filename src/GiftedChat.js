@@ -235,14 +235,15 @@ class GiftedChat extends React.Component {
    * Returns the height, based on current window size, taking the keyboard into account.
    */
   getMessagesContainerHeightWithKeyboard(composerHeight = this.state.composerHeight) {
-    return this.getBasicMessagesContainerHeight(composerHeight) - this.getKeyboardHeight() + this.getBottomOffset();
+    const messagesContainerHeight = this.getBasicMessagesContainerHeight(composerHeight) - this.getKeyboardHeight() + this.getBottomOffset();
+     if (this.props.isReplyToActive && this.props.replyPreviewHeight) {
+       return messagesContainerHeight - this.props.replyPreviewHeight
+     } 
+     return messagesContainerHeight
   }
 
   prepareMessagesContainerHeight(value) {
     if (this.props.isAnimated === true) {
-      if (this.props.isReplyToActive && this.props.replyPreviewHeight) {
-        return new Animated.value(value - this.props.replyPreviewHeight)
-      }
       return new Animated.Value(value);
     }
     return value;
@@ -309,6 +310,7 @@ class GiftedChat extends React.Component {
     return (
       <AnimatedView style={{
         height: this.state.messagesContainerHeight,
+        marginBottom: this.props.isReplyToActive && this.props.replyPreviewHeight ? this.props.replyPreviewHeight : 0,
       }}>
         <MessageContainer
           {...this.props}
