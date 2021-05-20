@@ -305,7 +305,7 @@ class GiftedChat extends React.Component {
     const AnimatedView = this.props.isAnimated === true ? Animated.View : View;
     return (
       <AnimatedView style={{
-        height: this.state.messagesContainerHeight,
+        height: this.props.isReplyToActive && this.props.replyPreviewHeight ? this.state.messagesContainerHeight - this.props.replyPreviewHeight : this.state.messagesContainerHeight,
       }}>
         <MessageContainer
           {...this.props}
