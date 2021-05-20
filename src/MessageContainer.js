@@ -135,7 +135,7 @@ export default class MessageContainer extends React.Component {
   renderScrollToBottomWrapper() {
     const propsStyle = this.props.scrollToBottomStyle || {}
     return (
-      <View style={[styles.scrollToBottomStyle, propsStyle]}>
+      <View style={[styles.scrollToBottomStyle, propsStyle, { bottom: this.props.isReplyToActive ? 60 : 30 }]}>
         <TouchableOpacity
           onPress={() => this.scrollToBottom()}
           hitSlop={{ top: 5, left: 5, right: 5, bottom: 5 }}
