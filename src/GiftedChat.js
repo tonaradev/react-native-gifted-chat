@@ -318,7 +318,6 @@ class GiftedChat extends React.Component {
     return (
       <AnimatedView style={{
         height: this.state.messagesContainerHeight,
-        marginBottom: this.props.isReplyToActive && this.props.replyPreviewHeight ? this.props.replyPreviewHeight : 0,
       }}>
         <MessageContainer
           {...this.props}
@@ -331,7 +330,6 @@ class GiftedChat extends React.Component {
           messageContainerController={this.props.messageContainerController}
           isReplyToActive={this.props.isReplyToActive}
         />
-        {this.renderChatFooter()}
       </AnimatedView>
     );
   }
@@ -496,6 +494,7 @@ class GiftedChat extends React.Component {
         <ActionSheet ref={component => this._actionSheetRef = component}>
           <View style={styles.container} onLayout={this.onMainViewLayout}>
             {this.renderMessages()}
+            {this.renderChatFooter()}
             {this.renderInputToolbar()}
           </View>
         </ActionSheet>
