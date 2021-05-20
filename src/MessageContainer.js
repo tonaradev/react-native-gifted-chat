@@ -207,7 +207,7 @@ export default class MessageContainer extends React.Component {
     return (
         <View
             ref='container'
-            style={styles.container}
+            style={[styles.container, {paddingBottom: this.props.isReplyToActive ? 50 : 0}]}
         >
           {this.state.showScrollBottom
           ? this.renderScrollToBottomWrapper()

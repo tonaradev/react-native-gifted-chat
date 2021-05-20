@@ -103,7 +103,6 @@ class GiftedChat extends React.Component {
 
   componentWillMount() {
     const { messages, text, messageContainerRef } = this.props;
-    console.log('messageContainerRef gifted chat', messageContainerRef)
     this.setIsMounted(true);
     this.initLocale();
     this.setMessages(messages || []);
@@ -317,6 +316,7 @@ class GiftedChat extends React.Component {
 
           ref={component => this._messageContainerRef = component}
           messageContainerController={this.props.messageContainerController}
+          isReplyToActive={this.props.isReplyToActive}
         />
         {this.renderChatFooter()}
       </AnimatedView>
