@@ -240,6 +240,9 @@ class GiftedChat extends React.Component {
 
   prepareMessagesContainerHeight(value) {
     if (this.props.isAnimated === true) {
+      if (this.props.isReplyToActive && this.props.replyPreviewHeight) {
+        return new Animated.value(value - this.props.replyPreviewHeight)
+      }
       return new Animated.Value(value);
     }
     return value;
@@ -305,7 +308,7 @@ class GiftedChat extends React.Component {
     const AnimatedView = this.props.isAnimated === true ? Animated.View : View;
     return (
       <AnimatedView style={{
-        height: this.props.isReplyToActive && this.props.replyPreviewHeight ? this.state.messagesContainerHeight - this.props.replyPreviewHeight : this.state.messagesContainerHeight,
+        height: this.state.messagesContainerHeight,
       }}>
         <MessageContainer
           {...this.props}
